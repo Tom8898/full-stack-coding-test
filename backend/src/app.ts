@@ -26,5 +26,24 @@ export class App {
                 response.status(500).send();
             }
         });
+
+        //
+        this.express.get('/user/:id', (request: Request, response: Response) => {
+            try {
+                const id = request.params.id?.trim();
+                if (!id) {
+                    return response.status(400).send("invalid parameter");
+                }
+
+                const user = this.userController.getUserById(id);
+                if (user) {
+                    return response.status(200).send(user);
+                } else {
+                    return response.status(404).send("not found");
+                }
+            } catch (e) {
+                return response.status(500).send();
+            }
+        });
     }
 }

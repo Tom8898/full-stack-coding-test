@@ -17,4 +17,14 @@ export class UserController {
     public getUsers(): User[] {
         return this._dataStore.map(({ id, last_name, first_name }) => ({ id, last_name, first_name }) as User);
     }
+
+    /**
+     * Find a user by id
+     *
+     * @param id The user id
+     * @return The matching user details, or undefined if the user is not found
+     */
+    public getUserById(id: string): UserDetails | undefined {
+        return this._dataStore.find(userDetail => id === userDetail.id);
+    }
 }
