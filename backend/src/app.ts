@@ -2,6 +2,7 @@ import cors from 'cors';
 import express, { Express, Request, Response } from 'express';
 import { UserController } from './controller/user-controller';
 import { User } from './model/user';
+import { ResponseUtil } from './common/ResponseUtil';
 
 
 export class App {
@@ -32,17 +33,17 @@ export class App {
             try {
                 const id = request.params.id?.trim();
                 if (!id) {
-                    return response.status(400).send("invalid parameter");
+                    return response.status(400).send(ResponseUtil.fail(400, "invalid parameter"));
                 }
 
                 const user = this.userController.getUserById(id);
                 if (user) {
-                    return response.status(200).send(user);
+                    return response.status(200).send(ResponseUtil.success(user));
                 } else {
-                    return response.status(404).send("not found");
+                    return response.status(404).send(ResponseUtil.fail(404, "user not found"));
                 }
             } catch (e) {
-                return response.status(500).send();
+                return response.status(500).send(ResponseUtil.fail(500, "internal error"));
             }
         });
     }

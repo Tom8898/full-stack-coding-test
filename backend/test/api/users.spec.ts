@@ -24,19 +24,21 @@ describe('/user/:id', ()=> {
         const response = await request(app).get('/user/99a8024b-f212-49ce-bc54-ee310c0e0007');
 
         expect(response.status).toEqual(200);
-        expect(response.body).toHaveProperty('id', '99a8024b-f212-49ce-bc54-ee310c0e0007');
+        expect(response.body.data).toHaveProperty('id', '99a8024b-f212-49ce-bc54-ee310c0e0007');
     });
 
     it('should return 400 for a invalid parameter', async () => {
         const response = await request(app).get('/user/%20');
 
         expect(response.status).toEqual(400);
+        expect(response.body.code).toEqual(400);
     });
 
     it('should return 404 if user is not found', async () => {
         const response = await request(app).get('/user/1');
 
         expect(response.status).toEqual(404);
+        expect(response.body.code).toEqual(404);
     });
 
 
