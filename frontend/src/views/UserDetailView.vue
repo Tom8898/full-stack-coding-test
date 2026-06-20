@@ -14,7 +14,7 @@ const userId = route.params.userId;
 onMounted(async () => {
   try {
     const response: AxiosResponse = await axios.get(`http://localhost:3000/user/${userId}`);
-    userDetail.value = response.data as UserDetails;
+    userDetail.value = response.data?.data as UserDetails;
   } catch (e) {
     userDetail.value = undefined;
     if (axios.isAxiosError(e) && e.response) {
